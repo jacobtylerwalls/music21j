@@ -24,7 +24,9 @@ import tempo from './moduleTests/tempo';
 import tie from './moduleTests/tie';
 import vfShow from './moduleTests/vfShow';
 import voiceLeading from './moduleTests/voiceLeading';
+import xmlToM21 from './moduleTests/xmlToM21';
 import * as music21 from '../src/main';
+
 
 const allTests = {
     articulations,
@@ -51,6 +53,7 @@ const allTests = {
     tie,
     vfShow,
     voiceLeading,
+    xmlToM21,
 };
 if (typeof window !== 'undefined') {
     (window as any).allTests = allTests;
