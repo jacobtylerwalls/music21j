@@ -24,7 +24,7 @@ import tempo from './moduleTests/tempo';
 import tie from './moduleTests/tie';
 import vfShow from './moduleTests/vfShow';
 import voiceLeading from './moduleTests/voiceLeading';
-import xmlToM21 from './moduleTests/xmlToM21';
+import xmlToM21 from './moduleTests/musicxml/xmlToM21';
 import * as music21 from '../src/main';
 
 
