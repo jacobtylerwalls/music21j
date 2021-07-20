@@ -9,7 +9,7 @@ export default function tests() {
         const mxUrl = 'https://raw.githubusercontent.com/cuthbertLab/music21/master/music21/corpus/trecento/PMFC_13_19-Credo Scabroso.xml';
         const sp = new music21.musicxml.xmlToM21.ScoreParser();
         sp.scoreFromUrl(mxUrl);
-        const bass = sp.stream.parts[3];
+        const bass = sp.stream.parts[2];
         assert.ok(bass.clef.isClassOrSubclass('BassClef'), 'clef in bass part is BassClef');
     });
 }
