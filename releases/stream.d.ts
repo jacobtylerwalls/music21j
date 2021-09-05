@@ -62,7 +62,7 @@ interface MakeAccidentalsParams {
  * @property {number} length - (readonly) the number of elements in the stream.
  * @property {Duration} duration - the total duration of the stream's elements
  * @property {number} highestTime -- the highest time point in the stream's elements
- * @property {renderOptions.RenderOptions} renderOptions - an object
+ * @property {RenderOptions} renderOptions - an object
  *     specifying how to render the stream
  * @property {Stream} flat - (readonly) a flattened representation of the Stream
  * @property {StreamIterator} notes - (readonly) the stream with
@@ -135,7 +135,7 @@ export declare class Stream extends base.Music21Object {
     get highestTime(): number;
     get semiFlat(): this;
     get flat(): this;
-    _getFlatOrSemiFlat(retainContainers: any): this;
+    flatten(retainContainers?: boolean): this;
     get notes(): iterator.StreamIterator<note.NotRest>;
     get notesAndRests(): iterator.StreamIterator<note.GeneralNote>;
     get tempo(): number;
@@ -551,6 +551,10 @@ export declare class Stream extends base.Music21Object {
      * @returns {number} length in pixels
      */
     estimateStaffLength(): any;
+    stripTies({ inPlace, matchByPitch, }?: {
+        inPlace?: boolean;
+        matchByPitch?: boolean;
+    }): this;
     /**
      * Returns either (1) a Stream containing Elements
      * (that wrap the null object) whose offsets and durations
