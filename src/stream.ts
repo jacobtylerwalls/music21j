@@ -2317,12 +2317,14 @@ export class Stream extends base.Music21Object {
      * @param {Object} [options] - object of playback options
      * @returns {this}
      */
-    playStream(options={}) {
+     playStream(options={}) {
         const params = {
             instrument: this.instrument,
             tempo: this.tempo,
             done: undefined,
             startNote: undefined,
+            noteOnCallback: undefined,
+            noteOffCallback: undefined,
         };
         common.merge(params, options);
         const startNoteIndex = params.startNote;
@@ -2368,10 +2370,16 @@ export class Stream extends base.Music21Object {
 
                 if (el.playMidi !== undefined) {
                     el.playMidi(params.tempo, nextNote, params);
+                    if (params.noteOnCallback) {
+                        params.noteOnCallback(el);
+                    }
                 }
                 currentNoteIndex += 1;
                 setTimeout(() => {
                     playNext(elements, params);
+                    if (params.noteOffCallback) {
+                        params.noteOffCallback(el);
+                    }
                 }, milliseconds);
             } else if (params && params.done) {
                 params.done.call();
