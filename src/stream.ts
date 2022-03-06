@@ -68,6 +68,11 @@ export interface PlayStreamParams {
     startNote?: number,
 }
 
+interface PlayStreamParamsWithHooks extends PlayStreamParams {
+    noteOnCallback?: (el: base.Music21Object) => {},
+    noteOffCallback?: (el: base.Music21Object) => {},
+}
+
 
 function _exportMusicXMLAsText(s: Stream): string {
     const gox = new GeneralObjectExporter(s);
@@ -2420,11 +2425,13 @@ export class Stream<ElementType extends base.Music21Object = base.Music21Object>
      * - tempo: number (default, `this.tempo`) -- should be in BPM but apparently in QL per minute!
      */
     playStream(options: PlayStreamParams = {}): this {
-        const params: PlayStreamParams = {
+        const params: PlayStreamParamsWithHooks = {
             instrument: this.instrument,
             tempo: this.tempo,
             done: undefined,
             startNote: undefined,
+            noteOnCallback: undefined,
+            noteOffCallback: undefined,
         };
         common.merge(params, options);
         const startNoteIndex = params.startNote;
@@ -2464,10 +2471,16 @@ export class Stream<ElementType extends base.Music21Object = base.Music21Object>
 
                 if ((<note.Note><any> el).playMidi !== undefined) {
                     (<note.Note><any> el).playMidi(params.tempo, nextNote, params);
+                    if (params.noteOnCallback !== undefined) {
+                        params.noteOnCallback(el);
+                    }
                 }
                 currentNoteIndex += 1;
                 setTimeout(() => {
                     playNext(elements, params);
+                    if (params.noteOffCallback !== undefined) {
+                        params.noteOffCallback(el);
+                    }
                 }, milliseconds);
             } else if (params && params.done) {
                 params.done.call();
