@@ -2317,7 +2317,7 @@ export class Stream extends base.Music21Object {
      * @param {Object} [options] - object of playback options
      * @returns {this}
      */
-     playStream(options={}) {
+    playStream(options={}) {
         const params = {
             instrument: this.instrument,
             tempo: this.tempo,
@@ -2344,13 +2344,7 @@ export class Stream extends base.Music21Object {
             if (currentNoteIndex <= lastNoteIndex && !this._stopPlaying) {
                 const el = elements[currentNoteIndex];
                 let nextNote;
-                let playDuration;
-                if (currentNoteIndex < lastNoteIndex) {
-                    nextNote = elements[currentNoteIndex + 1];
-                    playDuration = thisFlat.elementOffset(nextNote) - thisFlat.elementOffset(el);
-                } else {
-                    playDuration = el.duration.quarterLength;
-                }
+                const playDuration = el.duration.quarterLength;
                 const milliseconds = playDuration * 1000 * 60 / params.tempo;
 
                 // when we're ready to do full-on tempo marks:  from JV.
