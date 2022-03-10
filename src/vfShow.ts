@@ -893,6 +893,7 @@ export class Renderer {
             if (
                 thisEl.isClassOrSubclass('GeneralNote')
                 && thisEl.duration !== undefined
+                && !(thisEl.style.hideObjectOnPrint)
             ) {
                 // sets thisEl.activeVexflowNote -- may be overwritten but not so fast...
                 const vfn = (thisEl as note.GeneralNote).vexflowNote(options);
