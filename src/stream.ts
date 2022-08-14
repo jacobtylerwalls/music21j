@@ -1433,6 +1433,25 @@ export class Stream extends base.Music21Object {
                     retainVoices,
                 });
                 out.insert(el.offset, outEl);
+            } else if (
+                ((removeClasses as any as boolean) === true)
+                || removeClasses.some((removeClass) => el.classSet.has(removeClass))
+                || (!retainVoices && el.classSet.has('Voice'))
+            ) {
+                // remove this element
+                if (fillWithRests && el.quarterLength) {
+                    const endTime = common.opFrac(el.offset + el.quarterLength);
+                    if (restInfo.offset === undefined) {
+                        restInfo.offset = el.offset;
+                        restInfo.endTime = endTime;
+                    } else if (endTime > restInfo.endTime) {
+                        restInfo.endTime = endTime;
+                    }
+                }
+            } else {
+                optionalAddRest();
+                const elNew = el.clone(true);
+                out.insert(el.offset, elNew);
             }
         }
         return out;
@@ -3873,6 +3892,10 @@ export class Score extends Stream {
         return this;
     }
 }
+
+
+export class PartStaff extends Part {}
+
 
 // TODO(msc) -- Opus
 
