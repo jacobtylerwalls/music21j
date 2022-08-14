@@ -14137,6 +14137,7 @@ class MeasureParser {
       this.insertInMeasureOrVoice($mxNote, n);
       offsetIncrement = n.duration.quarterLength;
       this.nLast = n;
+      this.offsetMeasureNote += offsetIncrement;
     }
 
     if (this.$mxNoteList.length && !nextNoteIsChord) {
@@ -14149,9 +14150,8 @@ class MeasureParser {
       this.$mxLyricList = [];
       offsetIncrement = c.duration.quarterLength;
       this.nLast = c;
+      this.offsetMeasureNote += offsetIncrement;
     }
-
-    this.offsetMeasureNote += offsetIncrement;
   }
 
   xmlToChord($mxNoteList) {
