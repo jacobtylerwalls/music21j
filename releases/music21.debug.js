@@ -13671,7 +13671,8 @@ const DEFAULTS = {
   divisionsPerQuarter: 32 * 3 * 3 * 5 * 7
 };
 const NO_STAFF_ASSIGNED = 0;
-const STAFF_SPECIFIC_CLASSES = ['Clef', 'Dynamic', 'Expression', 'GeneralNote', 'KeySignature', 'StaffLayout', 'TempoIndication', 'TimeSignature'];
+const STAFF_SPECIFIC_CLASSES = ['Clef', 'Dynamic', 'Expression', 'GeneralNote', // 'KeySignature',
+'StaffLayout', 'TempoIndication'];
 
 function seta(m21El, xmlEl, tag, attributeName = undefined, transform = undefined) {
   const $matchEl = jquery__WEBPACK_IMPORTED_MODULE_4__(xmlEl).children(tag);
@@ -14004,8 +14005,8 @@ class MeasureParser {
     };
     this.musicDataMethods = {
       note: 'xmlToNote',
-      // 'backup': 'xmlBackup',
-      // 'forward': 'xmlForward',
+      backup: 'xmlBackup',
+      forward: 'xmlForward',
       // 'direction': 'xmlDirection',
       attributes: 'parseAttributesTag'
     };
@@ -14087,9 +14088,7 @@ class MeasureParser {
   }
 
   insertInMeasureOrVoice($mxObj, el) {
-    // TODO: offsets!
-    // this.stream.insert(this.offsetMeasureNote, el);
-    this.stream.append(el);
+    this.stream.insert(this.offsetMeasureNote, el);
   }
 
   xmlToNote($mxNote) {
@@ -14319,6 +14318,18 @@ class MeasureParser {
     }
 
     return d;
+  }
+
+  xmlBackup($mxBackup) {
+    const $mxDuration = $mxBackup.children('duration');
+    const change = parseFloat($mxDuration.text().trim()) / this.divisions;
+    this.offsetMeasureNote -= Math.max((0,_common__WEBPACK_IMPORTED_MODULE_5__.opFrac)(change), 0.0);
+  }
+
+  xmlForward($mxForward) {
+    const $mxDuration = $mxForward.children('duration');
+    const change = parseFloat($mxDuration.text().trim()) / this.divisions;
+    this.offsetMeasureNote += Math.min((0,_common__WEBPACK_IMPORTED_MODULE_5__.opFrac)(change), 0.0);
   } // xmlGraceToGrace
   // xmlNotations
   // xmlTechnicalToArticulation

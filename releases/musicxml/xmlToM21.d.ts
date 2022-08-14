@@ -100,6 +100,8 @@ export declare class MeasureParser {
     };
     musicDataMethods: {
         note: string;
+        backup: string;
+        forward: string;
         attributes: string;
     };
     constructor($mxMeasure: JQuery, parent?: PartParser);
@@ -115,6 +117,8 @@ export declare class MeasureParser {
     xmlToRest($mxRest: any): any;
     xmlNoteToGeneralNoteHelper(n: any, $mxNote: any, freeSpanners?: boolean): any;
     xmlToDuration($mxNote: any, inputM21: duration.Duration): duration.Duration;
+    xmlBackup($mxBackup: JQuery): void;
+    xmlForward($mxForward: JQuery): void;
     xmlToTie($mxNote: JQuery): tie.Tie;
     updateLyricsFromList(n: any, lyricList: any): void;
     xmlToLyric($mxLyric: JQuery, inputM21?: note.Lyric): note.Lyric;
