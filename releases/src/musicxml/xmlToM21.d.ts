@@ -60,6 +60,7 @@ export declare class PartParser {
     xmlMeasureToMeasure($mxMeasure: any): void;
     setLastMeasureInfo(m: any): void;
     adjustTimeAttributesFromMeasure(m: any): void;
+    separateOutPartStaves(): void;
 }
 export declare class MeasureParser {
     $mxMeasure: any;
@@ -103,6 +104,8 @@ export declare class MeasureParser {
     };
     constructor($mxMeasure: JQuery, parent?: PartParser);
     parse(): void;
+    getStaffNumber($mxObj: JQuery): number;
+    addToStaffReference($mxObj: JQuery, m21obj: Music21Object): void;
     insertInMeasureOrVoice($mxObj: any, el: any): void;
     xmlToNote($mxNote: any): void;
     xmlToChord($mxNoteList: any): chord.Chord;
